@@ -100,11 +100,11 @@ function Menu:add_color_picker(name, default, callback)
 		b = math.floor(default_color.B * 255),
 		r_dragging = false, g_dragging = false, b_dragging = false,
 		draw = {
-			new_rect(true, 3), new_rect(false, 4),
-			new_rect(true, 5), new_label(6),
-			new_rect(true, 5), new_label(6),
-			new_rect(true, 5), new_label(6),
-			new_rect(true, 3),
+			new_rect(true, 3), new_rect(false, 4), new_label(6),    -- R channel (1, 2, 3)
+			new_rect(true, 3), new_rect(false, 4), new_label(6),    -- G channel (4, 5, 6)
+			new_rect(true, 3), new_rect(false, 4), new_label(6),    -- B channel (7, 8, 9)
+			new_label(6),                                            -- Title label (10)
+			new_rect(true, 1),                                       -- Preview (11)
 		},
 	}
 	table.insert(self.items, it)
@@ -264,7 +264,7 @@ function Menu:_draw_checkbox(it)
 	end
 
 	text.Text = it.name
-	text.Position = box + Vector2.new(24, -2)
+	text.Position = box + Vector2.new(24, 0)
 end
 
 function Menu:_draw_slider(it)
@@ -297,11 +297,11 @@ function Menu:_draw_combobox(it)
 	outline.Color = Color3.new(0.3, 0.3, 0.35)
 
 	text.Text = it.value
-	text.Position = it.bar_pos + Vector2.new(6, -2)
+	text.Position = it.bar_pos + Vector2.new(6, 0)
 	text.Color = Color3.new(0.9, 0.9, 0.95)
 
 	arrow.Text = it.open and "▼" or "▶"
-	arrow.Position = it.bar_pos + Vector2.new(it.bar_size.X - 12, -2)
+	arrow.Position = it.bar_pos + Vector2.new(it.bar_size.X - 12, 0)
 	arrow.Color = Color3.new(0.7, 0.7, 0.75)
 	arrow.Visible = true
 
@@ -322,11 +322,11 @@ function Menu:_draw_multicombobox(it)
 	local selected_count = 0
 	for _ in pairs(it.selected) do selected_count = selected_count + 1 end
 	text.Text = selected_count == 0 and "None selected" or selected_count .. " selected"
-	text.Position = it.bar_pos + Vector2.new(6, -2)
+	text.Position = it.bar_pos + Vector2.new(6, 0)
 	text.Color = Color3.new(0.9, 0.9, 0.95)
 
 	arrow.Text = it.open and "▼" or "▶"
-	arrow.Position = it.bar_pos + Vector2.new(it.bar_size.X - 12, -2)
+	arrow.Position = it.bar_pos + Vector2.new(it.bar_size.X - 12, 0)
 	arrow.Color = Color3.new(0.7, 0.7, 0.75)
 	arrow.Visible = true
 
@@ -413,13 +413,13 @@ function Menu:_draw_dropdown_multi(it)
 end
 
 function Menu:_draw_color_picker(it)
-	local title_label = it.draw[4]
+	local title_label = it.draw[10]
 	title_label.Text = it.name
 	title_label.Position = it.position + Vector2.new(0, -4)
 	title_label.Color = Color3.new(0.9, 0.9, 0.95)
 	title_label.Visible = true
 
-	local preview = it.draw[9]
+	local preview = it.draw[11]
 	preview.Position = it.preview_pos
 	preview.Size = it.preview_size
 	preview.Color = it.value
